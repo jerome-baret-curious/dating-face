@@ -4,10 +4,10 @@ import { Validators } from '@angular/forms';
 import { DateTime } from 'luxon';
 
 @Component({
-  selector: 'profile-dating',
-  templateUrl: './profile.component.html',
+  selector: 'profile-editor',
+  templateUrl: './profile-editor.component.html',
 })
-export class ProfileComponent {
+export class ProfileEditorComponent {
   profileForm = this.fb.group({
     firstName: ['', Validators.required],
     birthDate: [DateTime.now()],

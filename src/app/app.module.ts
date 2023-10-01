@@ -3,24 +3,47 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile-editor/profile.component';
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { MatCardModule } from '@angular/material/card';
+import { NgOptimizedImage } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ProfileViewerComponent } from './profile-view/profile-viewer.component';
+import { ProfileService } from './service/profile-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
 @NgModule({
-  declarations: [AppComponent, ProfileComponent],
+  declarations: [
+    AppComponent,
+    PageNotFoundComponent,
+    ProfileEditorComponent,
+    ProfileViewComponent,
+    ProfileViewerComponent,
+  ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -37,8 +60,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    MatCardModule,
+    NgOptimizedImage,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:3001'],
+        disallowedRoutes: ['http://localhost:3001/api/login'],
+      },
+    }),
   ],
-  providers: [],
+  providers: [ProfileService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
