@@ -7,6 +7,7 @@ import { ProfileViewerComponent } from './profile-view/profile-viewer.component'
 const routes: Routes = [
   { path: 'view', component: ProfileViewerComponent },
   { path: 'edit', component: ProfileEditorComponent },
+  { path: '', redirectTo: '/view', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

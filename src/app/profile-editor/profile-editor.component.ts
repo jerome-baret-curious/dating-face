@@ -25,6 +25,6 @@ export class ProfileEditorComponent {
   }
 
   onSubmit() {
-    // TODO
+    this.profileForm.value;
   }
 }

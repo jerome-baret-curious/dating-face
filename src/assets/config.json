@@ -1,0 +1,4 @@
+{
+  "loginUrl": "api/login",
+  "profileUrl": "api/profile"
+}

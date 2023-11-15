@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,7 +23,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProfileViewerComponent } from './profile-view/profile-viewer.component';
-import { ProfileService } from './service/profile-service';
+import { MatSliderModule } from '@angular/material/slider';
+import { environment } from '../environments/environment';
+import { ConfigService } from './config/config.service';
+import { MatButtonModule } from '@angular/material/button';
+import { GenericErrorHandler } from './config/error-handler';
+import { ErrorInterceptor } from './auth/error.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,6 +36,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
+}
+
+export function initializeAppFactory(configService: ConfigService) {
+  return () => configService.loadConfig();
 }
 
 @NgModule({
@@ -50,6 +59,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatLuxonDateModule,
     TranslateModule.forRoot({
@@ -65,12 +75,26 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:3001'],
-        disallowedRoutes: ['http://localhost:3001/api/login'],
+        allowedDomains: environment.allowedDomains,
+        disallowedRoutes: [`${environment.apiUrl}/api/login`],
       },
     }),
+    MatSliderModule,
   ],
-  providers: [ProfileService],
+  providers: [
+    { provide: ErrorHandler, useClass: GenericErrorHandler },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppFactory,
+      deps: [ConfigService],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

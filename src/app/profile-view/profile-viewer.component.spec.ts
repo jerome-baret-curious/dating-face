@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ProfileService } from '../service/profile-service';
+import { ProfileService } from '../service/profile.service';
 import { ProfileViewerComponent } from './profile-viewer.component';
 
 describe('ProfileViewerComponent', () => {
