@@ -29,6 +29,7 @@ import { ConfigService } from './config/config.service';
 import { MatButtonModule } from '@angular/material/button';
 import { GenericErrorHandler } from './config/error-handler';
 import { ErrorInterceptor } from './auth/error.interceptor';
+import { DateSerialisedInterceptor } from './auth/date-serialised-interceptor.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -92,6 +93,11 @@ export function initializeAppFactory(configService: ConfigService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: DateSerialisedInterceptor,
       multi: true,
     },
   ],
