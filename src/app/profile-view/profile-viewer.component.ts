@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../dto/profile';
 
@@ -9,7 +9,7 @@ import { Profile } from '../dto/profile';
 export class ProfileViewerComponent implements OnInit {
   profiles: Profile[] = [];
   currProfile = -1;
-  @Input() item = '';
+  item = input('');
 
   constructor(private profileService: ProfileService) {}
 
