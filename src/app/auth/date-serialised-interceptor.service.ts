@@ -12,7 +12,7 @@ import { map, Observable } from 'rxjs';
 export class DateSerialisedInterceptor implements HttpInterceptor {
   intercept(
     httpRequest: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return httpRequest.responseType === 'json'
       ? this.handleJsonResponses(httpRequest, next)
@@ -21,7 +21,7 @@ export class DateSerialisedInterceptor implements HttpInterceptor {
 
   private handleJsonResponses(
     httpRequest: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return next
       .handle(httpRequest.clone({ responseType: 'text' }))

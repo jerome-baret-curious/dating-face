@@ -9,12 +9,12 @@ import { environment } from '../../environments/environment';
 export class ProfileService {
   constructor(
     private http: HttpClient,
-    private config: ConfigService
+    private config: ConfigService,
   ) {}
 
   getProfiles(): Observable<Profile[]> {
     this.http.get<Profile[]>(
-      `${environment.apiUrl}/${this.config.data.profileUrl}`
+      `${environment.apiUrl}/${this.config.data.profileUrl}`,
     );
     return of([]);
   }

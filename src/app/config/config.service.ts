@@ -16,8 +16,8 @@ export class ConfigService {
       this.http.get<Config>(this.configUrl).pipe(
         timeout({
           each: 1000, // if config hasn't been loaded in 1 second then error
-        })
-      )
+        }),
+      ),
     ).then((data: Config) => {
       this.data = { ...data };
       return data;

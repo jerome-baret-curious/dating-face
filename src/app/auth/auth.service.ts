@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private config: ConfigService,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
   ) {}
 
   login(email: string, password: string) {
@@ -21,7 +21,7 @@ export class AuthService {
       })
       .pipe(
         tap(token => this.setSession(token)),
-        shareReplay()
+        shareReplay(),
       );
   }
 

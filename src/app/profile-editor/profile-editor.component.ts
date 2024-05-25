@@ -1,11 +1,32 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateTime } from 'luxon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerToggle,
+} from '@angular/material/datepicker';
+import { MatSlider, MatSliderThumb } from '@angular/material/slider';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'profile-editor',
+  standalone: true,
   templateUrl: './profile-editor.component.html',
+  imports: [
+    MatFormField,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatSlider,
+    TranslateModule,
+    ReactiveFormsModule,
+    MatDatepickerInput,
+    MatInput,
+    MatSliderThumb,
+    MatLabel,
+  ],
 })
 export class ProfileEditorComponent {
   profileForm = this.fb.group({

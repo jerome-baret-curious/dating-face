@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
   HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import {
@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(
     request: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((requestError: HttpErrorResponse) => {
@@ -36,7 +36,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             return this.refreshTokenSubject.pipe(
               filter(v => !!v),
               take(1),
-              switchMap(() => next.handle(request))
+              switchMap(() => next.handle(request)),
             );
           } else {
             this.refreshTokenInProgress = true;
@@ -47,13 +47,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.refreshTokenSubject.next(token);
                 return next.handle(request);
               }),
-              finalize(() => (this.refreshTokenInProgress = false))
+              finalize(() => (this.refreshTokenInProgress = false)),
             );
           }
         } else {
           return throwError(() => requestError);
         }
-      })
+      }),
     );
   }
 }

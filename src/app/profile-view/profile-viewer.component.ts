@@ -1,9 +1,12 @@
 import { Component, input, OnInit } from '@angular/core';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../dto/profile';
+import { ProfileViewComponent } from './profile-view.component';
 
 @Component({
   selector: 'profile-viewer',
+  standalone: true,
+  imports: [ProfileViewComponent],
   templateUrl: './profile-viewer.component.html',
 })
 export class ProfileViewerComponent implements OnInit {

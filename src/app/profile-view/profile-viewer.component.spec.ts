@@ -8,7 +8,7 @@ describe('ProfileViewerComponent', () => {
   beforeEach(() => {
     const mockProfileService = {};
     TestBed.configureTestingModule({
-      declarations: [ProfileViewerComponent],
+      imports: [ProfileViewerComponent],
       providers: [{ provide: ProfileService, useValue: mockProfileService }],
     });
     profileService = TestBed.inject(ProfileService);

@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 export class BaseUrlInterceptor implements HttpInterceptor {
   intercept(
     request: HttpRequest<unknown>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     const apiReq = request.clone({
       url: `${environment.apiUrl}/${request.url}`,
